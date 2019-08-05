@@ -5,18 +5,18 @@ import os
 import datetime
 
 
-token = os.environ["POSE_BOT_TOKEN"]
+token = "NjA3ODc5NTIzMzIwNTk0NDYy.XUhNbQ.xwQbfU7beremQO_tCiu-mH_Uyxc"
 app = discord.Client()
 dict_interval_reminder = dict()
 dict_remind_channel = dict()
 dict_status_reminder = dict()
 COMMAND_DESCRIPTION = "**!start_pose_reminder**\n" \
                       "- 해당 서버의 자세 알리미를 현재 채널로 설정하고 작동시킵니다.\n" \
-                      "- 기본 알림 주기는 3600초입니다.\n**" \
+                      "- 기본 알림 주기는 60분입니다.\n**" \
                       "!stop_pose_reminder**\n" \
                       "- 현재 서버의 자세 알리미를 중단합니다.\n" \
                       "**!set_pose_reminder_interval**\n" \
-                      "- 현재 서버의 알림 주기를 설정합니다. (초 단위)"
+                      "- 현재 서버의 알림 주기를 설정합니다. (분 단위)"
 
 
 # generator for sending notification
@@ -41,12 +41,12 @@ async def send_pose_remind(guild_id):
 # work as timer
 async def auto_reminder(guild_id):
     async for _ in send_pose_remind(guild_id):
-        await asyncio.sleep(dict_interval_reminder[guild_id])
+        await asyncio.sleep(dict_interval_reminder[guild_id] * 60)
         flag = dict_status_reminder[guild_id]
         if not flag:
             return
 
-
+햐소
 @app.event
 async def on_ready():
     print("Now log in as {nickname: %s, id: %s}" % (app.user.name, app.user.id))
@@ -56,7 +56,7 @@ async def on_ready():
 
     # set default intervals
     for guild in app.guilds:
-        dict_interval_reminder[guild.id] = 3600
+        dict_interval_reminder[guild.id] = 60
         dict_status_reminder[guild.id] = False
 
 
@@ -84,12 +84,12 @@ async def on_message(message):
         # input interval is valid
         if 0 < interval:
             dict_interval_reminder[message.guild.id] = interval
-            await message.channel.send("주기가 %d초로 변경되었습니다."% interval)
+            await message.channel.send("주기가 %d분으로 변경되었습니다."% interval)
             print("Interval has been changed on guild: %s(%s), channel: %s(%s)" % (message.guild.name, message.guild.id,
                                                                                    message.channel.name, message.channel.id))
         # input interval is not valid
         else:
-            await message.channel.send("입력하신 주기가 올바르지 않습니다. 1초 이상의 정수를 입력해주세요.")
+            await message.channel.send("입력하신 주기가 올바르지 않습니다. 1분 이상의 정수를 입력해주세요.")
     elif message.content == "!help_pose_reminder":
         embed = discord.Embed(title="명령어 목록",
                               description=COMMAND_DESCRIPTION,
