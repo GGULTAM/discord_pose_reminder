@@ -46,7 +46,6 @@ async def auto_reminder(guild_id):
         if not flag:
             return
 
-햐소
 @app.event
 async def on_ready():
     print("Now log in as {nickname: %s, id: %s}" % (app.user.name, app.user.id))
