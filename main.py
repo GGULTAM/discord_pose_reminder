@@ -82,10 +82,13 @@ async def on_message(message):
         interval = int(message.content.replace("!set_pose_reminder_interval ", ""))
         # input interval is valid
         if 0 < interval:
-            dict_interval_reminder[message.guild.id] = interval
-            await message.channel.send("주기가 %d분으로 변경되었습니다."% interval)
-            print("Interval has been changed on guild: %s(%s), channel: %s(%s)" % (message.guild.name, message.guild.id,
-                                                                                   message.channel.name, message.channel.id))
+            if message.guild.id not in dict_remind_channel:
+                dict_interval_reminder[message.guild.id] = interval
+                await message.channel.send("주기가 %d분으로 변경되었습니다."% interval)
+                print("Interval has been changed on guild: %s(%s), channel: %s(%s)" % (message.guild.name, message.guild.id,
+                                                                                       message.channel.name, message.channel.id))
+            else:
+                await message.channel.send("알리미가 이미 실행중입니다. 먼저 중단한 후 주기를 변경해주세요.")
         # input interval is not valid
         else:
             await message.channel.send("입력하신 주기가 올바르지 않습니다. 1분 이상의 정수를 입력해주세요.")
