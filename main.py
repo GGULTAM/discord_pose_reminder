@@ -15,7 +15,7 @@ COMMAND_DESCRIPTION = "**!start_pose_reminder**\n" \
                       "- 기본 알림 주기는 60분입니다.\n**" \
                       "!stop_pose_reminder**\n" \
                       "- 현재 서버의 자세 알리미를 중단합니다.\n" \
-                      "**!set_pose_reminder_interval**\n" \
+                      "**!set_pose_reminder_interval 주기(분)**\n" \
                       "- 현재 서버의 알림 주기를 설정합니다. (분 단위)"
 
 
