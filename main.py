@@ -5,7 +5,7 @@ import os
 import datetime
 
 
-token = "NjA3ODc5NTIzMzIwNTk0NDYy.XUhNbQ.xwQbfU7beremQO_tCiu-mH_Uyxc"
+token = os.environ["POSE_BOT_TOKEN"]
 app = discord.Client()
 dict_interval_reminder = dict()
 dict_remind_channel = dict()
@@ -94,6 +94,5 @@ async def on_message(message):
                               description=COMMAND_DESCRIPTION,
                               color=0x49eaf2)
         await message.channel.send(embed=embed)
-
 
 app.run(token)
